@@ -1,11 +1,9 @@
 package com.tcgstore.controller
 
+import com.tcgstore.controller.request.PostCustomerRequest
 import com.tcgstore.model.CustomerModel
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("customer")
@@ -18,8 +16,10 @@ class CustomerController {
             "email@email.com"
         )
     }
+
     @PostMapping
-    fun createCustomer(@RequestBody customer: CustomerModel): CustomerModel {
-        return customer
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createCustomer(@RequestBody customer: PostCustomerRequest) {
+        println(customer)
     }
 }
