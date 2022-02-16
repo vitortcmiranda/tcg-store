@@ -1,6 +1,7 @@
 package com.tcgstore.controller
 
 import com.tcgstore.controller.request.PostCustomerRequest
+import com.tcgstore.controller.request.PutCustomerRequest
 import com.tcgstore.model.CustomerModel
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -31,5 +32,15 @@ class CustomerController {
     fun getCustomer(@PathVariable id: String): CustomerModel {
         return customers.first { it.id == id }
     }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun update(@PathVariable id: String, @RequestBody customer: PutCustomerRequest) {
+         customers.first { it.id == id }.let {
+             it.name = customer.name
+             it.email = customer.email
+         }
+    }
+
 
 }
