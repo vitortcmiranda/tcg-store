@@ -20,12 +20,12 @@ class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun createCustomer(@RequestBody customer: PostCustomerRequest) {
-        val id = if(customers.isEmpty()){
+        val id = if (customers.isEmpty()) {
             1
-        }else{
+        } else {
             customers.last().id.toInt() + 1
         }
-        customers.add(CustomerModel(id.toString(),customer.name,customer.email))
+        customers.add(CustomerModel(id.toString(), customer.name, customer.email))
     }
 
     @GetMapping("/{id}")
@@ -36,10 +36,16 @@ class CustomerController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun update(@PathVariable id: String, @RequestBody customer: PutCustomerRequest) {
-         customers.first { it.id == id }.let {
-             it.name = customer.name
-             it.email = customer.email
-         }
+        customers.first { it.id == id }.let {
+            it.name = customer.name
+            it.email = customer.email
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun delete(@PathVariable id: String) {
+        customers.removeIf { it.id == id }
     }
 
 
