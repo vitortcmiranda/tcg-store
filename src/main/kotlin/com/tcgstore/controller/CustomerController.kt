@@ -1,18 +1,19 @@
 package com.tcgstore.controller
 
+import com.tcgstore.model.CustomerModel
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("customer")
 class CustomerController {
-    @GetMapping("/id")
-    fun helloWorld(): String{
-        return "Customer 1"
-    }
-    @GetMapping("/all")
-    fun getAll(): String {
-        return "Client 1 , Client 2"
+    @GetMapping
+    fun getCustomer(): CustomerModel {
+        return CustomerModel(
+            "1",
+            "Vitor",
+            "email@email.com"
+        )
     }
 }
