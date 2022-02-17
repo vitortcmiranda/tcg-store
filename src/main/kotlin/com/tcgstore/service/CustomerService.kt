@@ -1,10 +1,13 @@
 package com.tcgstore.service
 
 import com.tcgstore.model.CustomerModel
+import com.tcgstore.repository.CustomerRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CustomerService {
+class CustomerService(
+    val customerRepository: CustomerRepository
+) {
     val customers = mutableListOf<CustomerModel>()
 
     fun getAll(name: String?): List<CustomerModel> {
@@ -15,27 +18,24 @@ class CustomerService {
     }
 
     fun createCustomer(customer: CustomerModel) {
-        val id = if (customers.isEmpty()) {
-            1
-        } else {
-            customers.last().id!!.toInt() + 1
-        }
-        customer.id = id
-        customers.add(customer)
+        customerRepository.save(customer)
     }
 
     fun getCustomer(id: Int): CustomerModel {
-        return customers.first { it.id == id }
+        return customerRepository.findById(id).orElseThrow()
     }
 
     fun update(customer: CustomerModel) {
-        customers.first { it.id == customer.id }.let {
-            it.name = customer.name
-            it.email = customer.email
+        if(!customerRepository.existsById(customer.id!!)){
+            throw Exception()
         }
+        customerRepository.save(customer)
     }
 
     fun delete(id: Int) {
-        customers.removeIf { it.id == id }
+        if(!customerRepository.existsById(id!!)){
+            throw Exception()
+        }
+        customerRepository.deleteById(id)
     }
 }
