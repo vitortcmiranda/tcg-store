@@ -8,13 +8,11 @@ import org.springframework.stereotype.Service
 class CustomerService(
     val customerRepository: CustomerRepository
 ) {
-    val customers = mutableListOf<CustomerModel>()
-
     fun getAll(name: String?): List<CustomerModel> {
         name?.let {
-            return customers.filter { it.name.contains(name, true) }
+            return customerRepository.findByNameContaining(it).toList()
         }
-        return customers
+        return customerRepository.findAll().toList()
     }
 
     fun createCustomer(customer: CustomerModel) {
