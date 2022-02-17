@@ -10,6 +10,9 @@ class CustomerService(
 ) {
     fun getAll(name: String?): List<CustomerModel> {
         name?.let {
+            if (it.get(0).isUpperCase()) {
+                return customerRepository.findByNameStartsWith(it).toList()
+            }
             return customerRepository.findByNameContaining(it).toList()
         }
         return customerRepository.findAll().toList()
@@ -24,14 +27,14 @@ class CustomerService(
     }
 
     fun update(customer: CustomerModel) {
-        if(!customerRepository.existsById(customer.id!!)){
+        if (!customerRepository.existsById(customer.id!!)) {
             throw Exception()
         }
         customerRepository.save(customer)
     }
 
     fun delete(id: Int) {
-        if(!customerRepository.existsById(id!!)){
+        if (!customerRepository.existsById(id!!)) {
             throw Exception()
         }
         customerRepository.deleteById(id)
