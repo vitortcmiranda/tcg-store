@@ -21,5 +21,9 @@ class CardsService(
         return cardsRepository.findByStatus(CardStatus.ATIVO)
     }
 
+    fun findById(id: Int): CardsModel {
+        return cardsRepository.findById(id).orElseThrow()
+    }
+
 
 }

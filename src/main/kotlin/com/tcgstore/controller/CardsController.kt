@@ -23,13 +23,16 @@ class CardsController(
     }
 
     @GetMapping
-    fun findAll(): List<CardsModel> {
-        return cardsService.findAll()
-    }
+    fun findAll(): List<CardsModel> =
+        cardsService.findAll()
+
 
     @RequestMapping("/active")
     @GetMapping
-    fun findActives(): List<CardsModel> {
-        return cardsService.findActives()
-    }
+    fun findActives(): List<CardsModel> =
+        cardsService.findActives()
+
+    @RequestMapping("/{id}")
+    @GetMapping
+    fun findById(@PathVariable id: Int): CardsModel = cardsService.findById(id)
 }
