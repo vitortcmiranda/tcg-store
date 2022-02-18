@@ -23,4 +23,8 @@ data class CardsModel(
     @Column
     var price: BigDecimal,
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    var customer: CustomerModel? = null
+
 )
