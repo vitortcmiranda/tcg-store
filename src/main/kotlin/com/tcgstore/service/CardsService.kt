@@ -25,5 +25,13 @@ class CardsService(
         return cardsRepository.findById(id).orElseThrow()
     }
 
+    fun deleteById(id: Int) {
+        val card = findById(id)
+
+        card.status = CardStatus.CANCELADO
+
+        cardsRepository.save(card);
+    }
+
 
 }

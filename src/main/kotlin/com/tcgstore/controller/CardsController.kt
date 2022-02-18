@@ -35,4 +35,10 @@ class CardsController(
     @RequestMapping("/{id}")
     @GetMapping
     fun findById(@PathVariable id: Int): CardsModel = cardsService.findById(id)
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun delete(@PathVariable id: Int) {
+        cardsService.deleteById(id)
+    }
 }
