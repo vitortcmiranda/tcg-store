@@ -1,6 +1,7 @@
 package com.tcgstore.controller
 
 import com.tcgstore.controller.request.PostCardsRequest
+import com.tcgstore.controller.request.PutCardsRequest
 import com.tcgstore.extension.toCardsModel
 import com.tcgstore.model.CardsModel
 import com.tcgstore.service.CardsService
@@ -40,5 +41,12 @@ class CardsController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: Int) {
         cardsService.deleteById(id)
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun update(@PathVariable id: Int, @RequestBody card: PutCardsRequest) {
+        val cardSaved = cardsService.findById(id)
+        cardsService.update(card.toCardsModel(cardSaved))
     }
 }

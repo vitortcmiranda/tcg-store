@@ -30,7 +30,11 @@ class CardsService(
 
         card.status = CardStatus.CANCELADO
 
-        cardsRepository.save(card);
+        update(card);
+    }
+
+    fun update(card: CardsModel) {
+        cardsRepository.save(card)
     }
 
 
