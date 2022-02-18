@@ -8,3 +8,4 @@ spring:
     password: root
   flyway:
     baselineOnMigrate : true
+    baslineVersion: 0.0
