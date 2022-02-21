@@ -2,6 +2,7 @@ package com.tcgstore.service
 
 import com.tcgstore.enums.CardStatus
 import com.tcgstore.model.CardsModel
+import com.tcgstore.model.CustomerModel
 import com.tcgstore.repository.CardsRepository
 import org.springframework.stereotype.Service
 
@@ -30,12 +31,18 @@ class CardsService(
 
         card.status = CardStatus.CANCELADO
 
-        update(card);
+        update(card)
     }
 
     fun update(card: CardsModel) {
         cardsRepository.save(card)
     }
 
-
+    fun deleteByCustomer(customer: CustomerModel) {
+        val cards = cardsRepository.findByCustomer(customer)
+        for (card in cards) {
+            card.status = CardStatus.DELETADO
+        }
+        cardsRepository.saveAll(cards)
+    }
 }
