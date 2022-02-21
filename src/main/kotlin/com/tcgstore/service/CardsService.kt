@@ -1,6 +1,7 @@
 package com.tcgstore.service
 
 import com.tcgstore.enums.CardStatus
+import com.tcgstore.exception.NotFoundExeption
 import com.tcgstore.model.CardsModel
 import com.tcgstore.model.CustomerModel
 import com.tcgstore.repository.CardsRepository
@@ -24,7 +25,7 @@ class CardsService(
     }
 
     fun findById(id: Int): CardsModel {
-        return cardsRepository.findById(id).orElseThrow { Exception("N existe esse recurso") }
+        return cardsRepository.findById(id).orElseThrow { NotFoundExeption("Card [${id}] not exists", "TCGS-0001") }
     }
 
     fun deleteById(id: Int) {

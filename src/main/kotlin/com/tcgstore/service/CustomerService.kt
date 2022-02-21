@@ -1,6 +1,7 @@
 package com.tcgstore.service
 
 import com.tcgstore.enums.CustomerStatus
+import com.tcgstore.exception.NotFoundExeption
 import com.tcgstore.model.CustomerModel
 import com.tcgstore.repository.CustomerRepository
 import org.springframework.stereotype.Service
@@ -26,7 +27,7 @@ class CustomerService(
     }
 
     fun findById(id: Int): CustomerModel {
-        return customerRepository.findById(id).orElseThrow()
+        return customerRepository.findById(id).orElseThrow { NotFoundExeption("Card [${id}] not exists", "TCGS-0001") }
     }
 
     fun update(customer: CustomerModel) {
