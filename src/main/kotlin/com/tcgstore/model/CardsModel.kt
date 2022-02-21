@@ -1,6 +1,8 @@
 package com.tcgstore.model
 
 import com.tcgstore.enums.CardStatus
+import com.tcgstore.enums.Errors
+import com.tcgstore.exception.BadRequestException
 import java.math.BigDecimal
 import javax.persistence.*
 
@@ -30,7 +32,7 @@ data class CardsModel(
     var status: CardStatus? = null
         set(value) {
             if (field == CardStatus.CANCELADO || field == CardStatus.DELETADO)
-                throw Exception("Change of status not allowed, ${field} to ${value}")
+                throw Exception( BadRequestException(Errors.ML102.message,Errors.ML102.code))
 
             field = value
         }
