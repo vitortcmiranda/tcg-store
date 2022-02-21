@@ -24,7 +24,7 @@ class CardsService(
     }
 
     fun findById(id: Int): CardsModel {
-        return cardsRepository.findById(id).orElseThrow()
+        return cardsRepository.findById(id).orElseThrow { Exception("N existe esse recurso") }
     }
 
     fun deleteById(id: Int) {

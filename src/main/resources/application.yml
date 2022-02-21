@@ -9,3 +9,5 @@ spring:
   flyway:
     baselineOnMigrate : true
     baslineVersion: 0.0
+  jackson:
+    default-property-inclusion: non_null
