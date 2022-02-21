@@ -25,6 +25,8 @@ fun PostCardsRequest.toCardsModel(customer: CustomerModel): CardsModel {
         description = this.description,
         customer = customer
     )
+
+
 }
 
 fun PutCardsRequest.toCardsModel(previousCard: CardsModel): CardsModel {
