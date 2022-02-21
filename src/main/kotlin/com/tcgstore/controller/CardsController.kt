@@ -49,4 +49,9 @@ class CardsController(
         val cardSaved = cardsService.findById(id)
         cardsService.update(card.toCardsModel(cardSaved))
     }
+
+    @GetMapping("/customer/{id}")
+    fun cardsByCustomer(@PathVariable id: Int): List<CardsModel> =
+        cardsService.findCardsByCustomer(id);
+
 }

@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class CardsService(
-    val cardsRepository: CardsRepository
+    val cardsRepository: CardsRepository,
+    val customerService: CustomerService
 ) {
     fun create(cards: CardsModel) {
         cardsRepository.save(cards)
@@ -44,5 +45,11 @@ class CardsService(
             card.status = CardStatus.DELETADO
         }
         cardsRepository.saveAll(cards)
+    }
+
+    fun findCardsByCustomer(customerId: Int): List<CardsModel> {
+        val customer = customerService.findById(customerId)
+
+        return cardsRepository.findByCustomer(customer)
     }
 }
