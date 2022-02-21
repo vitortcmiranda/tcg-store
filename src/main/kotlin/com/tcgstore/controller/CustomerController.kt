@@ -2,8 +2,9 @@ package com.tcgstore.controller
 
 import com.tcgstore.controller.request.PostCustomerRequest
 import com.tcgstore.controller.request.PutCustomerRequest
+import com.tcgstore.controller.response.CustomerResponse
 import com.tcgstore.extension.toCustomerModel
-import com.tcgstore.model.CustomerModel
+import com.tcgstore.extension.toResponse
 import com.tcgstore.service.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -16,8 +17,8 @@ class CustomerController(
 
 
     @GetMapping
-    fun getAll(@RequestParam name: String?): List<CustomerModel> =
-        customerService.getAll(name)
+    fun getAll(@RequestParam name: String?): List<CustomerResponse> =
+        customerService.getAll(name).map { it.toResponse() }
 
 
     @PostMapping
@@ -27,8 +28,8 @@ class CustomerController(
 
 
     @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: Int): CustomerModel =
-        customerService.findById(id)
+    fun getCustomer(@PathVariable id: Int): CustomerResponse =
+        customerService.findById(id).toResponse()
 
 
     @PutMapping("/{id}")

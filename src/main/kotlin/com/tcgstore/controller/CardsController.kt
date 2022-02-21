@@ -2,8 +2,9 @@ package com.tcgstore.controller
 
 import com.tcgstore.controller.request.PostCardsRequest
 import com.tcgstore.controller.request.PutCardsRequest
+import com.tcgstore.controller.response.CardsResponse
 import com.tcgstore.extension.toCardsModel
-import com.tcgstore.model.CardsModel
+import com.tcgstore.extension.toResponse
 import com.tcgstore.service.CardsService
 import com.tcgstore.service.CustomerService
 import org.springframework.http.HttpStatus
@@ -24,18 +25,18 @@ class CardsController(
     }
 
     @GetMapping
-    fun findAll(): List<CardsModel> =
-        cardsService.findAll()
+    fun findAll(): List<CardsResponse> =
+        cardsService.findAll().map { it.toResponse() }
 
 
     @RequestMapping("/active")
     @GetMapping
-    fun findActives(): List<CardsModel> =
-        cardsService.findActives()
+    fun findActives(): List<CardsResponse> =
+        cardsService.findActives().map { it.toResponse() }
 
     @RequestMapping("/{id}")
     @GetMapping
-    fun findById(@PathVariable id: Int): CardsModel = cardsService.findById(id)
+    fun findById(@PathVariable id: Int): CardsResponse = cardsService.findById(id).toResponse()
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -51,7 +52,7 @@ class CardsController(
     }
 
     @GetMapping("/customer/{id}")
-    fun cardsByCustomer(@PathVariable id: Int): List<CardsModel> =
-        cardsService.findCardsByCustomer(id);
+    fun cardsByCustomer(@PathVariable id: Int): List<CardsResponse> =
+        cardsService.findCardsByCustomer(id).map { it.toResponse() }
 
 }

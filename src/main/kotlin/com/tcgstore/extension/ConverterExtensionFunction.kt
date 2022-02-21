@@ -4,6 +4,8 @@ import com.tcgstore.controller.request.PostCardsRequest
 import com.tcgstore.controller.request.PostCustomerRequest
 import com.tcgstore.controller.request.PutCardsRequest
 import com.tcgstore.controller.request.PutCustomerRequest
+import com.tcgstore.controller.response.CardsResponse
+import com.tcgstore.controller.response.CustomerResponse
 import com.tcgstore.enums.CardStatus
 import com.tcgstore.enums.CustomerStatus
 import com.tcgstore.model.CardsModel
@@ -37,4 +39,25 @@ fun PutCardsRequest.toCardsModel(previousCard: CardsModel): CardsModel {
         price = previousCard.price
     )
 
+}
+
+fun CustomerModel.toResponse(): CustomerResponse {
+    return CustomerResponse(
+        id = this.id,
+        name = this.name,
+        email = this.email,
+        status = this.status
+    )
+}
+
+fun CardsModel.toResponse(): CardsResponse {
+    return CardsResponse(
+        id = this.id,
+        name = this.name,
+        description = this.description,
+        price = this.price,
+        customer = this.customer,
+        status = this.status
+
+    )
 }
