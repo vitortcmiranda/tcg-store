@@ -1,6 +1,7 @@
 package com.tcgstore.service
 
 import com.tcgstore.enums.CardStatus
+import com.tcgstore.enums.Errors
 import com.tcgstore.exception.NotFoundExeption
 import com.tcgstore.model.CardsModel
 import com.tcgstore.model.CustomerModel
@@ -25,7 +26,7 @@ class CardsService(
     }
 
     fun findById(id: Int): CardsModel {
-        return cardsRepository.findById(id).orElseThrow { NotFoundExeption("Card [${id}] not exists", "TCGS-0001") }
+        return cardsRepository.findById(id).orElseThrow { NotFoundExeption(Errors.ML101.message.format(id),Errors.ML101.code) }
     }
 
     fun deleteById(id: Int) {
