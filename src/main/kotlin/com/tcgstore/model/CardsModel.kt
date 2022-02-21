@@ -1,6 +1,6 @@
 package com.tcgstore.model
 
-import com.tcgstore.enum.CardStatus
+import com.tcgstore.enums.CardStatus
 import java.math.BigDecimal
 import javax.persistence.*
 

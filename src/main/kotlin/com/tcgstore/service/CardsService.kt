@@ -1,6 +1,6 @@
 package com.tcgstore.service
 
-import com.tcgstore.enum.CardStatus
+import com.tcgstore.enums.CardStatus
 import com.tcgstore.model.CardsModel
 import com.tcgstore.repository.CardsRepository
 import org.springframework.stereotype.Service

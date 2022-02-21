@@ -19,7 +19,7 @@ class CardsController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody request: PostCardsRequest) {
-        val customer = customerService.getById(request.customerId)
+        val customer = customerService.findById(request.customerId)
         cardsService.create(request.toCardsModel(customer))
     }
 

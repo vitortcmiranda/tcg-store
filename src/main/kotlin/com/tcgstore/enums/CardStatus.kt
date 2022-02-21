@@ -1,4 +1,4 @@
-package com.tcgstore.enum
+package com.tcgstore.enums
 
 enum class CardStatus {
     ATIVO,
