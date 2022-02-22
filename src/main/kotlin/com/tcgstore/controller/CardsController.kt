@@ -9,6 +9,7 @@ import com.tcgstore.service.CardsService
 import com.tcgstore.service.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("cards")
@@ -19,7 +20,7 @@ class CardsController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: PostCardsRequest) {
+    fun create(@Valid @RequestBody request: PostCardsRequest) {
         val customer = customerService.findById(request.customerId)
         cardsService.create(request.toCardsModel(customer))
     }

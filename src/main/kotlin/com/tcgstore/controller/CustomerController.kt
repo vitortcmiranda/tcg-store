@@ -9,6 +9,7 @@ import com.tcgstore.service.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("customer")
@@ -35,7 +36,7 @@ class CustomerController(
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: Int, @RequestBody customer: PutCustomerRequest) {
+    fun update(@PathVariable id: Int, @Valid @RequestBody customer: PutCustomerRequest) {
         val customerSaved = customerService.findById(id)
         customerService.update(customer.toCustomerModel(customerSaved))
 
