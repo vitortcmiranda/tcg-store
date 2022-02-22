@@ -32,7 +32,7 @@ data class CardsModel(
     var status: CardStatus? = null
         set(value) {
             if (field == CardStatus.CANCELADO || field == CardStatus.DELETADO)
-                throw Exception( BadRequestException(Errors.ML102.message,Errors.ML102.code))
+                throw Exception( BadRequestException(Errors.TCGS102.message,Errors.TCGS102.code))
 
             field = value
         }

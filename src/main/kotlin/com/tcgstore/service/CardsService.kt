@@ -26,7 +26,7 @@ class CardsService(
     }
 
     fun findById(id: Int): CardsModel {
-        return cardsRepository.findById(id).orElseThrow { NotFoundExeption(Errors.ML101.message.format(id),Errors.ML101.code) }
+        return cardsRepository.findById(id).orElseThrow { NotFoundExeption(Errors.TCGS101.message.format(id),Errors.TCGS101.code) }
     }
 
     fun deleteById(id: Int) {
