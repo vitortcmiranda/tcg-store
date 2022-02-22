@@ -7,6 +7,7 @@ import com.tcgstore.extension.toCustomerModel
 import com.tcgstore.extension.toResponse
 import com.tcgstore.service.CustomerService
 import org.springframework.http.HttpStatus
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -23,7 +24,7 @@ class CustomerController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createCustomer(@RequestBody customer: PostCustomerRequest) =
+    fun createCustomer(@RequestBody @Validated customer: PostCustomerRequest) =
         customerService.createCustomer(customer.toCustomerModel())
 
 
