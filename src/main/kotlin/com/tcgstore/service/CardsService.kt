@@ -60,4 +60,11 @@ class CardsService(
         return cardsRepository.findAllById(cardIds).toList()
 
     }
+
+    fun purchase(cards: MutableList<CardsModel>) {
+        cards.map {
+            it.status = CardStatus.VENDIDO
+        }
+        cardsRepository.saveAll(cards)
+    }
 }

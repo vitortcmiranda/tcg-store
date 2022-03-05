@@ -20,7 +20,7 @@ data class PurchaseModel(
         joinColumns = [JoinColumn(name = "purchase_id")],
         inverseJoinColumns = [JoinColumn(name = "card_id")]
     )
-    val cards: List<CardsModel>,
+    val cards: MutableList<CardsModel>,
 
     @Column
     val nfe: String? = null,
