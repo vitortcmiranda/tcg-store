@@ -26,7 +26,8 @@ class CardsService(
     }
 
     fun findById(id: Int): CardsModel {
-        return cardsRepository.findById(id).orElseThrow { NotFoundExeption(Errors.TCGS101.message.format(id),Errors.TCGS101.code) }
+        return cardsRepository.findById(id)
+            .orElseThrow { NotFoundExeption(Errors.TCGS101.message.format(id), Errors.TCGS101.code) }
     }
 
     fun deleteById(id: Int) {
@@ -53,5 +54,10 @@ class CardsService(
         val customer = customerService.findById(customerId)
 
         return cardsRepository.findByCustomer(customer)
+    }
+
+    fun findAllByIds(cardIds: Set<Int>): List<CardsModel> {
+        return cardsRepository.findAllById(cardIds).toList()
+
     }
 }
