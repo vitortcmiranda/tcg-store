@@ -4,11 +4,8 @@ import com.tcgstore.controller.mapper.PurchaseMapper
 import com.tcgstore.controller.request.PostPurchaseRequest
 import com.tcgstore.service.PurchaseService
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/purchase")
@@ -19,7 +16,7 @@ class PurchaseController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun purchase(@RequestBody request: PostPurchaseRequest){
+    fun purchase(@Valid @RequestBody request: PostPurchaseRequest){
         purchaseService.create(purchaseMapper.toModel(request))
     }
 }

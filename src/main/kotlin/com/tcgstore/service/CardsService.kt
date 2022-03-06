@@ -67,4 +67,14 @@ class CardsService(
         }
         cardsRepository.saveAll(cards)
     }
+
+    fun cardAvailable(cardsIds: Set<Int>): Boolean {
+        val cards = findAllByIds(cardsIds)
+        cards.map {
+            if(it.status == CardStatus.VENDIDO){
+                return false
+            }
+        }
+        return true
+    }
 }

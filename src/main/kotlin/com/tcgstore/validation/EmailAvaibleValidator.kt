@@ -1,6 +1,7 @@
 package com.tcgstore.validation
 
 import com.tcgstore.service.CustomerService
+import com.tcgstore.validation.annotations.EmailAvailable
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 

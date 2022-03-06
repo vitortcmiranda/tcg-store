@@ -1,6 +1,6 @@
 package com.tcgstore.controller.request
 
-import com.tcgstore.validation.EmailAvailable
+import com.tcgstore.validation.annotations.EmailAvailable
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotEmpty
 
