@@ -28,7 +28,8 @@ class CustomerService(
     }
 
     fun findById(id: Int): CustomerModel {
-        return customerRepository.findById(id).orElseThrow { NotFoundExeption(Errors.TCGS201.message.format(id),Errors.TCGS201.code) }
+        return customerRepository.findById(id)
+            .orElseThrow { NotFoundExeption(Errors.TCGS201.message.format(id), Errors.TCGS201.code) }
     }
 
     fun update(customer: CustomerModel) {
@@ -46,5 +47,12 @@ class CustomerService(
     }
 
     fun emailAvailable(email: String): Boolean = !customerRepository.existsByEmail(email)
+
+    fun customerActive(customerId: Int): Boolean {
+        val customer = customerRepository.findById(customerId)
+        var customerAtivo : Boolean = true
+        customer.map {  customerAtivo = (it.status == CustomerStatus.ATIVO) }
+        return customerAtivo
+    }
 
 }
