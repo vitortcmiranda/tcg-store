@@ -6,13 +6,15 @@ import com.tcgstore.enums.Profile
 import com.tcgstore.exception.NotFoundExeption
 import com.tcgstore.model.CustomerModel
 import com.tcgstore.repository.CustomerRepository
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class CustomerService(
-    val customerRepository: CustomerRepository,
+    private val customerRepository: CustomerRepository,
     @org.springframework.context.annotation.Lazy
-    val cardsService: CardsService
+    private val cardsService: CardsService,
+    private val bCrypt: BCryptPasswordEncoder
 ) {
     fun getAll(name: String?): List<CustomerModel> {
         name?.let {
@@ -26,7 +28,8 @@ class CustomerService(
 
     fun createCustomer(customer: CustomerModel) {
         val customerCopy = customer.copy(
-            roles = setOf(Profile.CUSTOMER)
+            roles = setOf(Profile.CUSTOMER),
+            password = bCrypt.encode(customer.password)
         )
         customerRepository.save(customerCopy)
     }

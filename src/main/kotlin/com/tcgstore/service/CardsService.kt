@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class CardsService(
-    val cardsRepository: CardsRepository,
-    val customerService: CustomerService
+    private val cardsRepository: CardsRepository,
+    private val customerService: CustomerService
 ) {
     fun create(cards: CardsModel) {
         cardsRepository.save(cards)
