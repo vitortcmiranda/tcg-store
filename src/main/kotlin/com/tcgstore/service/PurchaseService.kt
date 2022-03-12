@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class PurchaseService(
     private val purchaseRepository: PurchaseRepository,
+    private val customerService: CustomerService,
     private val applicationEventPublisher: ApplicationEventPublisher
 ) {
 
@@ -23,4 +24,9 @@ class PurchaseService(
         println("Atualizando status do livro")
         purchaseRepository.save(purchaseModel)
     }
+
+    fun findPurchasesByUserID(id: Int): List<PurchaseModel> =
+        purchaseRepository.findByCustomer(customerService.findById(id))
+
+
 }
