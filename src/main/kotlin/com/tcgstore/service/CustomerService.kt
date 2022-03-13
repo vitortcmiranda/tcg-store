@@ -2,7 +2,7 @@ package com.tcgstore.service
 
 import com.tcgstore.enums.CustomerStatus
 import com.tcgstore.enums.Errors
-import com.tcgstore.enums.Profile
+import com.tcgstore.enums.Role
 import com.tcgstore.exception.NotFoundExeption
 import com.tcgstore.model.CustomerModel
 import com.tcgstore.repository.CustomerRepository
@@ -28,7 +28,7 @@ class CustomerService(
 
     fun createCustomer(customer: CustomerModel) {
         val customerCopy = customer.copy(
-            roles = setOf(Profile.CUSTOMER),
+            roles = setOf(Role.CUSTOMER),
             password = bCrypt.encode(customer.password)
         )
         customerRepository.save(customerCopy)

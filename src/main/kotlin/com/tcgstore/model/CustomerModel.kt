@@ -1,7 +1,7 @@
 package com.tcgstore.model
 
 import com.tcgstore.enums.CustomerStatus
-import com.tcgstore.enums.Profile
+import com.tcgstore.enums.Role
 import javax.persistence.*
 
 @Entity(name = "customer")
@@ -25,7 +25,7 @@ data class CustomerModel(
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = Profile::class, fetch = FetchType.EAGER)//every we look up for a customer we also want the roles
+    @ElementCollection(targetClass = Role::class, fetch = FetchType.EAGER)//every we look up for a customer we also want the roles
     @CollectionTable(name ="customer_roles", joinColumns = [JoinColumn(name = "customer_id")])
-    var roles: Set<Profile> = setOf()
+    var roles: Set<Role> = setOf()
 )
