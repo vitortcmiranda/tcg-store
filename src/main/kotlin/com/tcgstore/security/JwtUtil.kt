@@ -27,7 +27,7 @@ class JwtUtil {
 
     fun isValid(token: String): Boolean {
         val claims = getClaims(token)
-        if(claims.subject == null || claims.expiration == null || Date().after(claims.expiration)){
+        if (claims.subject == null || claims.expiration == null || Date().after(claims.expiration)) {
             return false
         }
         return true
@@ -36,7 +36,7 @@ class JwtUtil {
     private fun getClaims(token: String): Claims {
         try {
             return Jwts.parser().setSigningKey(secret!!.toByteArray()).parseClaimsJws(token).body
-        }catch (ex: Exception){
+        } catch (ex: Exception) {
             throw AuthenticationException("Token invalido", "9999")
         }
     }

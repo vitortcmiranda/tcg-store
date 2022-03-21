@@ -1,5 +1,6 @@
 package com.tcgstore.config
 
+import com.tcgstore.enums.Role
 import com.tcgstore.repository.CustomerRepository
 import com.tcgstore.security.AuthenticationFilter
 import com.tcgstore.security.AuthorizationFilter
@@ -28,6 +29,8 @@ class SecurityConfig(
         "/customer"
     )
 
+    private val ADMIN_MATCHERS = arrayOf("/admin/**")
+
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(userDetails).passwordEncoder(bCryptPasswordEncoder())
     }
@@ -36,6 +39,7 @@ class SecurityConfig(
         http.cors().and().csrf().disable();
         http.authorizeRequests()
             .antMatchers(HttpMethod.POST, *PUBLIC_POST_MATCHERS).permitAll() //the * explode a list like a string
+            .antMatchers(*ADMIN_MATCHERS).hasAuthority(Role.ADMIN.description)
             .anyRequest().authenticated()
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
         http.addFilter(AuthorizationFilter(authenticationManager(), jwtUtil, userDetails))
