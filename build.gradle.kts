@@ -23,6 +23,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa") //here
     implementation("org.springframework.boot:spring-boot-starter-security") //here
+    implementation("io.jsonwebtoken:jjwt:0.2")
     runtimeOnly("mysql:mysql-connector-java")
 
     implementation("org.springframework.boot:spring-boot-starter-validation")

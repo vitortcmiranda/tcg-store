@@ -2,6 +2,7 @@ package com.tcgstore.config
 
 import com.tcgstore.repository.CustomerRepository
 import com.tcgstore.security.AuthenticationFilter
+import com.tcgstore.security.JwtUtil
 import com.tcgstore.service.UserDetailsCustomService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -17,7 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 @EnableWebSecurity
 class SecurityConfig(
     private val customerRepository: CustomerRepository,
-    private val userDetails: UserDetailsCustomService
+    private val userDetails: UserDetailsCustomService,
+    private val jwtUtil: JwtUtil
 ) : WebSecurityConfigurerAdapter(
 ) {
 
@@ -34,7 +36,7 @@ class SecurityConfig(
         http.authorizeRequests()
             .antMatchers(HttpMethod.POST, *PUBLIC_POST_MATCHERS).permitAll() //the * explode a list like a string
             .anyRequest().authenticated()
-        http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository))
+        http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
         http.sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)//sessions are independent which means they all got be authenticated
 

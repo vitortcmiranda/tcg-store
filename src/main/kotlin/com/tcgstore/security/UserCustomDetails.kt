@@ -12,7 +12,7 @@ class UserCustomDetails(
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = customerModel.roles.map { SimpleGrantedAuthority(it.description)
     }.toMutableList()
 
-    val id = customerModel.id
+    val id: Int = customerModel.id!!
     override fun getPassword(): String = customerModel.password
     override fun getUsername(): String = customerModel.id.toString()
     override fun isAccountNonExpired(): Boolean = true
