@@ -4,6 +4,7 @@ import com.tcgstore.enums.Role
 import com.tcgstore.repository.CustomerRepository
 import com.tcgstore.security.AuthenticationFilter
 import com.tcgstore.security.AuthorizationFilter
+import com.tcgstore.security.CustomAuthEntryPoint
 import com.tcgstore.security.JwtUtil
 import com.tcgstore.service.UserDetailsCustomService
 import org.springframework.context.annotation.Bean
@@ -27,7 +28,8 @@ import org.springframework.web.filter.CorsFilter
 class SecurityConfig(
     private val customerRepository: CustomerRepository,
     private val userDetails: UserDetailsCustomService,
-    private val jwtUtil: JwtUtil
+    private val jwtUtil: JwtUtil,
+    private val customEntryPoint: CustomAuthEntryPoint
 ) : WebSecurityConfigurerAdapter(
 ) {
 
@@ -49,15 +51,14 @@ class SecurityConfig(
             .anyRequest().authenticated()
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
         http.addFilter(AuthorizationFilter(authenticationManager(), jwtUtil, userDetails))
-        http.sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)//sessions are independent which means they all got be authenticated
-
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//sessions are independent which means they all got be authenticated
+        http.exceptionHandling().authenticationEntryPoint(customEntryPoint)
     }
 
     override fun configure(web: WebSecurity) {
         web.ignoring().antMatchers(
             "/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
-            "/swagger-ui.html", "/webjars/**","/swagger-ui/**"
+            "/swagger-ui.html", "/webjars/**", "/swagger-ui/**"
         )
     }
 
