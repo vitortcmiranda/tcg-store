@@ -5,6 +5,7 @@ import com.tcgstore.controller.request.PutCardsRequest
 import com.tcgstore.controller.response.CardsResponse
 import com.tcgstore.extension.toCardsModel
 import com.tcgstore.extension.toResponse
+import com.tcgstore.security.annotations.UserCanOnlyAccessTheirOwnResource
 import com.tcgstore.service.CardsService
 import com.tcgstore.service.CustomerService
 import org.springframework.http.HttpStatus
@@ -41,12 +42,14 @@ class CardsController(
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @UserCanOnlyAccessTheirOwnResource
     fun delete(@PathVariable id: Int) {
         cardsService.deleteById(id)
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @UserCanOnlyAccessTheirOwnResource
     fun update(@PathVariable id: Int, @RequestBody card: PutCardsRequest) {
         val cardSaved = cardsService.findById(id)
         cardsService.update(card.toCardsModel(cardSaved))
