@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("admin")
 class AdminController(
-    val customerService: CustomerService
+    private val customerService: CustomerService
 ) {
 
 
-    @GetMapping("/report")
+    @GetMapping("/reports")
     @AdminOnly
     fun getAll(): String =
         "This is a Report. Only admin can see it"

@@ -15,8 +15,8 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("cards")
 class CardsController(
-    val cardsService: CardsService,
-    val customerService: CustomerService
+    private val cardsService: CardsService,
+    private val customerService: CustomerService
 ) {
 
     @PostMapping
