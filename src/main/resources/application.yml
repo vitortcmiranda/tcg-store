@@ -1,11 +1,9 @@
 spring:
+  profiles:
+    active: dev
   jpa:
     hibernate:
       ddl-auto: update
-  datasource:
-    url: jdbc:mysql://localhost:3306/dbtcgstore?createDatabaseIfNotExist=true
-    username: root
-    password: root
   flyway:
     baselineOnMigrate : true
     baslineVersion: 0.0

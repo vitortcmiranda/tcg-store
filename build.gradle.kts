@@ -33,6 +33,9 @@ dependencies {
 
     implementation("org.flywaydb:flyway-core:7.7.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    // https://mvnrepository.com/artifact/io.mockk/mockk
+    testImplementation("io.mockk:mockk:1.12.3")
+
 }
 
 tasks.withType<KotlinCompile> {
