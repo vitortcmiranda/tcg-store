@@ -1,11 +1,15 @@
 package com.tcgstore.service
 
+import com.tcgstore.controller.response.CardsResponse
 import com.tcgstore.enums.CardStatus
 import com.tcgstore.enums.Errors
 import com.tcgstore.exception.NotFoundExeption
+import com.tcgstore.extension.toResponse
 import com.tcgstore.model.CardsModel
 import com.tcgstore.model.CustomerModel
 import com.tcgstore.repository.CardsRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
@@ -17,12 +21,12 @@ class CardsService(
         cardsRepository.save(cards)
     }
 
-    fun findAll(): List<CardsModel> {
-        return cardsRepository.findAll().toList()
+    fun findAll(pageable: Pageable): Page<CardsResponse> {
+        return cardsRepository.findAll(pageable).map { it.toResponse() }
     }
 
-    fun findActives(): List<CardsModel> {
-        return cardsRepository.findByStatus(CardStatus.ATIVO)
+    fun findActives(pageable: Pageable): Page<CardsModel> {
+        return cardsRepository.findByStatus(CardStatus.ATIVO, pageable)
     }
 
     fun findById(id: Int): CardsModel {

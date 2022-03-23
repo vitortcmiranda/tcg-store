@@ -8,6 +8,9 @@ import com.tcgstore.extension.toResponse
 import com.tcgstore.security.annotations.UserCanOnlyAccessTheirOwnResource
 import com.tcgstore.service.CardsService
 import com.tcgstore.service.CustomerService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -27,14 +30,13 @@ class CardsController(
     }
 
     @GetMapping
-    fun findAll(): List<CardsResponse> =
-        cardsService.findAll().map { it.toResponse() }
+    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<CardsResponse> =
+        cardsService.findAll(pageable)
 
 
-    @RequestMapping("/active")
-    @GetMapping
-    fun findActives(): List<CardsResponse> =
-        cardsService.findActives().map { it.toResponse() }
+    @GetMapping("/active")
+    fun findActives(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<CardsResponse> =
+        cardsService.findActives(pageable).map { it.toResponse() }
 
     @RequestMapping("/{id}")
     @GetMapping
