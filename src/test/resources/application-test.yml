@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/dbtcgstoretest?createDatabaseIfNotExist=true
+    username: root
+    password: root
+  profiles:
+    active: test
+  jpa:
+    hibernate:
+      ddl-auto: update
+  flyway:
+    baselineOnMigrate : true
+    baslineVersion: 0.0
+  jackson:
+    default-property-inclusion: non_null
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+jwt:
+    secret: 445a2208-aaba-4fa7-87e5-3b44cebbf11b
+    expiration: 999999
