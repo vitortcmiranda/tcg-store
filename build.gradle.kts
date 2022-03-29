@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "1.6.10"
     kotlin("plugin.spring") version "1.6.10"
     kotlin("plugin.jpa") version "1.3.72"
+    jacoco
 }
 
 group = "com.tcgstore"
@@ -24,6 +25,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa") //here
     implementation("org.springframework.boot:spring-boot-starter-security") //here
     implementation("io.jsonwebtoken:jjwt:0.2")
+
     runtimeOnly("mysql:mysql-connector-java")
 
     implementation("org.springframework.boot:spring-boot-starter-validation")

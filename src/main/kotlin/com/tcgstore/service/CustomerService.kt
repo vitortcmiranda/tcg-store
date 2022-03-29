@@ -41,7 +41,7 @@ class CustomerService(
 
     fun update(customer: CustomerModel) {
         if (!customerRepository.existsById(customer.id!!)) {
-            throw Exception()
+            throw NotFoundExeption(Errors.TCGS201.message.format(customer.id), Errors.TCGS201.code)
         }
         customerRepository.save(customer)
     }
@@ -49,6 +49,7 @@ class CustomerService(
     fun delete(id: Int) {
         val customer = findById(id)
         cardsService.deleteByCustomer(customer)
+
         customer.status = CustomerStatus.INATIVO
         customerRepository.save(customer)
     }
