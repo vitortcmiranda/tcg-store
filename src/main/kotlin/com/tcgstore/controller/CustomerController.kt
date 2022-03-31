@@ -21,7 +21,7 @@ class CustomerController(
 
 
     @GetMapping
-    @AdminOnly
+//    @AdminOnly
     fun getAll(@RequestParam name: String?): List<CustomerResponse> =
         customerService.getAll(name).map { it.toResponse() }
 

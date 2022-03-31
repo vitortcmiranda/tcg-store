@@ -37,6 +37,9 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     // https://mvnrepository.com/artifact/io.mockk/mockk
     testImplementation("io.mockk:mockk:1.12.3")
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
+    testImplementation("org.springframework.security:spring-security-test:5.6.2")
+
 
 }
 

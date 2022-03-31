@@ -3,13 +3,10 @@ package com.tcgstore.repository
 import com.tcgstore.helper.ModelBuilderHelper
 import com.tcgstore.model.CustomerModel
 import io.mockk.junit5.MockKExtension
-import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Nested
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import java.util.*
@@ -28,6 +25,8 @@ class CustomerRepositoryTest {
     @BeforeEach
     fun setup() = customerRepository.deleteAll()
 
+    @AfterEach
+    fun tearDown() = customerRepository.deleteAll()
 
     @Test
     fun `should return name containing`() {
