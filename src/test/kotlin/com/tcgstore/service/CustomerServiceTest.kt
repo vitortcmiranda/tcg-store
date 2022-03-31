@@ -2,9 +2,7 @@ package com.tcgstore.service
 
 import com.tcgstore.enums.CustomerStatus
 import com.tcgstore.enums.Errors
-import com.tcgstore.enums.Role
 import com.tcgstore.exception.NotFoundExeption
-import com.tcgstore.model.CustomerModel
 import com.tcgstore.repository.CustomerRepository
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -20,10 +18,12 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.util.*
+import com.tcgstore.helper.ModelBuilderHelper
 
 @ExtendWith(MockKExtension::class)
 class CustomerServiceTest {
 
+    var helper = ModelBuilderHelper()
 
     @MockK
     private lateinit var customerRepository: CustomerRepository
@@ -41,7 +41,7 @@ class CustomerServiceTest {
     @Test
     fun `should return all customers`() {
 
-        val fakeCustomers = listOf(buildCustomer(), buildCustomer())
+        val fakeCustomers = listOf(helper.buildCustomer(), helper.buildCustomer())
 
         every { customerRepository.findAll() } returns fakeCustomers
 
@@ -57,7 +57,7 @@ class CustomerServiceTest {
     fun `should return customer when name is passed with first word in upper case`() {
         val name = "Tes"//UUID.randomUUID().toString()
 
-        val fakeCustomers = listOf(buildCustomer(), buildCustomer())
+        val fakeCustomers = listOf(helper.buildCustomer(), helper.buildCustomer())
 
         every { customerRepository.findByNameStartsWith(name) } returns fakeCustomers
 
@@ -73,7 +73,7 @@ class CustomerServiceTest {
     fun `should return only customer with name`() {
         val name = "ste"
 
-        val fakeCustomers = listOf(buildCustomer(), buildCustomer())
+        val fakeCustomers = listOf(helper.buildCustomer(), helper.buildCustomer())
 
         every { customerRepository.findByNameContaining(name) } returns fakeCustomers
 
@@ -88,7 +88,7 @@ class CustomerServiceTest {
     @Test
     fun `should create customer and encrypt password`() {
         val initialPassword = Math.random().toString()
-        val fakeCustomer = buildCustomer(password = initialPassword)
+        val fakeCustomer = helper.buildCustomer(password = initialPassword)
         val fakePassword = UUID.randomUUID().toString()
         val fakeCustomerEncrypted = fakeCustomer.copy(password = fakePassword)
 
@@ -105,7 +105,7 @@ class CustomerServiceTest {
     @Test
     fun `should return customer by id`() {
         val id = Random().nextInt()
-        val fakeCustomer = buildCustomer(id = id)
+        val fakeCustomer = helper.buildCustomer(id = id)
 
         every { customerRepository.findById(id) } returns Optional.of(fakeCustomer)
 
@@ -131,7 +131,7 @@ class CustomerServiceTest {
     @Test
     fun `should update customer`() {
         val id = Random().nextInt()
-        val fakeCustomer = buildCustomer(id = id)
+        val fakeCustomer = helper.buildCustomer(id = id)
 
         every { customerRepository.existsById(id) } returns true
         every { customerRepository.save(fakeCustomer) } returns fakeCustomer
@@ -145,7 +145,7 @@ class CustomerServiceTest {
     @Test
     fun `should throw Not Found exception when update customer`() {
         val id = Random().nextInt()
-        val fakeCustomer = buildCustomer(id = id)
+        val fakeCustomer = helper.buildCustomer(id = id)
 
         every { customerRepository.existsById(id) } returns false
         every { customerRepository.save(fakeCustomer) } returns fakeCustomer
@@ -162,7 +162,7 @@ class CustomerServiceTest {
     @Test
     fun `should delete customer`() {
         val id = Random().nextInt()
-        val fakeCustomer = buildCustomer(id = id)
+        val fakeCustomer = helper.buildCustomer(id = id)
         val expectedCustomer = fakeCustomer.copy(status = CustomerStatus.INATIVO)
 
         every { customerService.findById(id) } returns fakeCustomer
@@ -224,7 +224,7 @@ class CustomerServiceTest {
     @Test
     fun `should return true when customer status Active`() {
         val id = Random().nextInt()
-        val fakeCustomer = buildCustomer(id = id)
+        val fakeCustomer = helper.buildCustomer(id = id)
 
         every { customerService.findById(id = id) } returns fakeCustomer
         every { customerRepository.findById(id) } returns Optional.of(fakeCustomer)
@@ -240,7 +240,7 @@ class CustomerServiceTest {
     @Test
     fun `should return false when customer status isn't Active`() {
         val id = Random().nextInt()
-        val fakeCustomer = buildCustomer(id = id, status = CustomerStatus.INATIVO)
+        val fakeCustomer = helper.buildCustomer(id = id, status = CustomerStatus.INATIVO)
 
         every { customerService.findById(id = id) } returns fakeCustomer
         every { customerRepository.findById(id) } returns Optional.of(fakeCustomer)
@@ -252,20 +252,5 @@ class CustomerServiceTest {
 
         verify(exactly = 1){ customerRepository.findById(any())}
     }
-
-    fun buildCustomer(
-        id: Int? = null,
-        name: String = "customer name",
-        email: String = "${UUID.randomUUID()}@email.com",
-        password: String = "password",
-        status: CustomerStatus? = CustomerStatus.ATIVO
-    ) = CustomerModel(
-        id = id,
-        name = name,
-        email = email,
-        status = status!!,
-        password = password,
-        roles = setOf(Role.CUSTOMER)
-    )
 
 }
